@@ -25,11 +25,34 @@ public class ColaProcesos {
         System.out.println("\nCola de procesos");
         System.out.println("\nNombre              PID         Instrucciones Pendientes");
         for(Proceso p : colaProcesos){
-            System.out.print(numeracion + ".- " + p.getNomProceso()+"         "+p.getPID()+"                    1"+(p.getInstruccionesTotales()-p.getInstruccionesEjecutadas()));
             if(numeracion==1)
-                System.out.println("    <-------- Proceso activo");
+                System.out.println(numeracion + ".- " + p.getNomProceso()+"         "+p.getPID()+"                    "+p.getInstruccionesTotales()+"     <------ Proceso activo");
+            if(numeracion!=1)
+                System.out.println(numeracion + ".- " + p.getNomProceso()+"         "+p.getPID()+"                    "+p.getInstruccionesTotales());
             numeracion++;
         }
+    }
+
+    public void ejecutarActual (){
+        int tempPendientes = colaProcesos.get(0).getInstruccionesTotales()-5;
+        int tempEjecutadas = colaProcesos.get(0).getInstruccionesEjecutadas()+5;
+        Proceso tempP;
+
+        colaProcesos.get(0).setInstruccionesTotales(tempPendientes);
+        colaProcesos.get(0).setInstruccionesEjecutadas(tempEjecutadas);
+        if (tempPendientes ==0){
+            //EliminarProcesoMemoria
+        }
+        tempP = colaProcesos.get(0);
+        colaProcesos.remove(0);
+        colaProcesos.add(tempP);
+    }
+
+    public void pasarSiguiente (){
+        Proceso tempP;
+        tempP = colaProcesos.get(0);
+        colaProcesos.remove(0);
+        colaProcesos.add(tempP);
     }
 
     public List<Proceso> getColaProcesos() {

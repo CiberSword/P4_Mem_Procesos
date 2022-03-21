@@ -61,13 +61,16 @@ public class Main {
                         listaProcesos.colaProcesos.get(0).VerProceso();
                         break;
                     case 5:
-
+                        listaProcesos.ejecutarActual();
                         break;
                     case 6:
+                        listaProcesos.pasarSiguiente();
                         break;
                     case 7:
                         break;
                     case 8:
+                        System.out.println("Procesos antes del cierre:");
+                        listaProcesos.imprimirColaProcesos();
                         System.out.println("Adios!");
                         break;
                     default:

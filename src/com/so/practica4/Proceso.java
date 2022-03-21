@@ -9,7 +9,7 @@ public class Proceso {
     String nomProceso;
     int PID;
     int instruccionesTotales;
-    int instruccionesEjecutadas;
+    int instruccionesEjecutadas=0;
     int tamanioProceso;
     List <DireccionMemoria> dirAsignadas;
 
@@ -26,13 +26,28 @@ public class Proceso {
         //PID aleatorio
         this.setPID(random.nextInt(999999));
         //Num aleatorio instrucciones entre 10-30
-        setInstruccionesTotales(random.nextInt(30) +10);
+        setInstruccionesTotales(random.nextInt(30+10) +10);
         //Num aleatorio para espacio proceso
         int tamaniolocalidades[] = {64,128,256,512};
         int selecciontamanio = random.nextInt(3);
         setTamanioProceso(tamaniolocalidades[selecciontamanio]);
 
        /* dirAsignadas.add(new DireccionMemoria(1456, this.nomProceso, this.PID));*/
+    }
+
+    public void VerProceso(){
+        System.out.println("Proceso Actual:");
+        System.out.println("- Nombre: "+this.nomProceso);
+        System.out.println("- ID Único: "+this.PID);
+        System.out.println("- Intrucciones Totales: "+this.instruccionesTotales);
+        System.out.println("- Instrucciones ejecutadas: "+this.instruccionesEjecutadas);
+        System.out.println("- Direcciones de memoria asignadas: "/*+this.dirAsignadas*/);
+        imprimirDirecciones();
+    }
+    public void imprimirDirecciones(){
+        for(DireccionMemoria var : dirAsignadas){
+            System.out.print(var.getNumDireccion()+",");
+        }
     }
 
     public String getNomProceso() {
@@ -83,19 +98,4 @@ public class Proceso {
         this.dirAsignadas = dirAsignadas;
     }
 
-
-    public void VerProceso(){
-        System.out.println("Proceso Actual:");
-        System.out.println("- Nombre: "+this.nomProceso);
-        System.out.println("- ID Único: "+this.PID);
-        System.out.println("- Intrucciones Totales: "+this.instruccionesTotales);
-        System.out.println("- Instrucciones ejecutadas: "+this.instruccionesEjecutadas);
-        System.out.println("- Direcciones de memoria asignadas: "/*+this.dirAsignadas*/);
-        imprimirDirecciones();
-    }
-    public void imprimirDirecciones(){
-        for(DireccionMemoria var : dirAsignadas){
-            System.out.print(var.getNumDireccion()+",");
-        }
-    }
 }
