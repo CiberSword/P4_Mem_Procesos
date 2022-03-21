@@ -30,7 +30,7 @@ public class Proceso {
         int tamaniolocalidades[] = {64,128,256,512};
         int selecciontamanio = random.nextInt(3);
         setTamanioProceso(tamaniolocalidades[selecciontamanio]);
-
+        System.out.println("hasta aquí el proceso se creó bien");
     }
 
     public String getNomProceso() {

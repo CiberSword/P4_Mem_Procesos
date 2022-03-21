@@ -29,7 +29,6 @@ public class MapaMemoria {
             if(temp.PID == null)
                 conteoLibres++;
         }
-        System.out.println(conteoLibres);
         if (conteoLibres>=locsRequeridas)
             hayEspacio = true;
         else
