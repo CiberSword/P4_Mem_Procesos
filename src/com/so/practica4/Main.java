@@ -10,6 +10,8 @@ public class Main {
 
     public static void main(String[] args) {
         MapaMemoria memoriaSistema = new MapaMemoria(2048);
+        ColaProcesos listaProcesos = new ColaProcesos();
+
         memoriaSistema.imprimirInfo();
         //Elección menu
         while (opcion != 8) {
@@ -32,21 +34,29 @@ public class Main {
                 switch (opcion) {
                     case 1:
                         Proceso nuevoProceso = new Proceso();
+                        //Pide nombre del proceso y se generan los valores aleatorios de PID e Instruccciones
                         nuevoProceso.crearProceso();
-                        nuevoProceso.Ver_Proceso();
+
+                        //Verifica si hay espacio en memoria revisando nulls
                         if (memoriaSistema.espacioDisponible(nuevoProceso.getTamanioProceso())){
-                            //Asignación del proceso a memoria
+                            //Asignación de localidades de memoria al proceso
+                            nuevoProceso.setDirAsignadas(memoriaSistema.direccionesParaProceso(nuevoProceso));
+                            //Se añade proceso a la cola de procesos
+                            listaProcesos.addProceso(nuevoProceso);
+                            System.out.println("Proceso creado correctamente");
+                            nuevoProceso.imprimirDirecciones();
                         }
                         else
                             System.out.println("No hay suficiente espacio disponible para crear el proceso. \n" +
                                     "Ejecute o mate otros procesos e intente de nuevo");
                         break;
                     case 2:
+                        listaProcesos.imprimirColaProcesos();
                         break;
                     case 3:
                         break;
                     case 4:
-                        /*nuevoProceso.Ver_Proceso();*/
+
                         break;
                     case 5:
                         break;

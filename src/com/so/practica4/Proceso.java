@@ -30,7 +30,7 @@ public class Proceso {
         int tamaniolocalidades[] = {64,128,256,512};
         int selecciontamanio = random.nextInt(3);
         setTamanioProceso(tamaniolocalidades[selecciontamanio]);
-        System.out.println("hasta aquí el proceso se creó bien");
+
        /* dirAsignadas.add(new DireccionMemoria(1456, this.nomProceso, this.PID));*/
     }
 
@@ -83,7 +83,7 @@ public class Proceso {
     }
 
 
-    public void Ver_Proceso(){
+    public void VerProceso(){
         System.out.println("Nombre: "+this.nomProceso + "\n");
         System.out.println("ID Único: "+this.PID + "\n");
         System.out.println("Intrucciones Totales: "+this.instruccionesTotales + "\n");
@@ -91,9 +91,9 @@ public class Proceso {
         System.out.println("Direcciones de memoria asignadas: "/*+this.dirAsignadas*/ + "\n");
         /*imprimirLista(dirAsignadas);*/
     }
-        public static void imprimirLista(List<DireccionMemoria> dirAsignadas){
-            for(DireccionMemoria var : dirAsignadas){
-                System.out.println(var);
-            }
+    public void imprimirDirecciones(){
+        for(DireccionMemoria var : dirAsignadas){
+            System.out.print(var.getNumDireccion()+",");
         }
+    }
 }

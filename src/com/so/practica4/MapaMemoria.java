@@ -35,5 +35,22 @@ public class MapaMemoria {
             hayEspacio = false;
         return hayEspacio;
     }
-}
+
+    public List<DireccionMemoria> direccionesParaProceso (Proceso nuevoProce){
+        int localidadesNecesarias = nuevoProce.getTamanioProceso();
+        List<DireccionMemoria> localidadesAsignadas = new ArrayList<DireccionMemoria>();
+        for(DireccionMemoria n : numDir){
+            if(n.getPID()==null && localidadesNecesarias>=1){
+                localidadesAsignadas.add(n);
+                n.setPID(nuevoProce.getPID());
+                n.setNombreProceso(nuevoProce.getNomProceso());
+                localidadesNecesarias--;
+            }
+        }
+        return localidadesAsignadas;
+    }
+
+
+    }
+
 
