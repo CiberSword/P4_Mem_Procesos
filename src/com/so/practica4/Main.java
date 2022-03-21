@@ -1,8 +1,6 @@
 package com.so.practica4;
 
-import java.util.ArrayList;
 import java.util.Scanner;
-import java.util.Random;
 
 public class Main {
     static Scanner scanner = new Scanner(System.in); //Sirve para recoger texto por consola
@@ -64,15 +62,15 @@ public class Main {
                     case 5:
                         boolean activo;
                         activo = listaProcesos.ejecutarActual();
-                        if (activo==false) {
-                            for (DireccionMemoria tempMem : listaProcesos.colaProcesos.get(listaProcesos.colaProcesos.size()-1).dirAsignadas){
+                        if (activo == false) {
+                            for (DireccionMemoria tempMem : listaProcesos.colaProcesos.get(listaProcesos.colaProcesos.size() - 1).dirAsignadas) {
                                 tempMem.setPID(null);
                                 tempMem.setNombreProceso(null);
                             }
-                            listaProcesos.procesosFinalizados.add(listaProcesos.colaProcesos.get(listaProcesos.colaProcesos.size()-1));
-                            System.out.println("El proceso "+listaProcesos.colaProcesos.get(listaProcesos.colaProcesos.size()-1).getNomProceso()+ " con PID "+
-                                    listaProcesos.colaProcesos.get(listaProcesos.colaProcesos.size()-1).getPID()+" ha finalizado");
-                            listaProcesos.colaProcesos.remove(listaProcesos.colaProcesos.size()-1);
+                            listaProcesos.procesosFinalizados.add(listaProcesos.colaProcesos.get(listaProcesos.colaProcesos.size() - 1));
+                            System.out.println("El proceso " + listaProcesos.colaProcesos.get(listaProcesos.colaProcesos.size() - 1).getNomProceso() + " con PID " +
+                                    listaProcesos.colaProcesos.get(listaProcesos.colaProcesos.size() - 1).getPID() + " ha finalizado");
+                            listaProcesos.colaProcesos.remove(listaProcesos.colaProcesos.size() - 1);
                             listaProcesos.contadorProcesos--;
                         }
                         break;
@@ -80,13 +78,13 @@ public class Main {
                         listaProcesos.pasarSiguiente();
                         break;
                     case 7:
-                        for (DireccionMemoria tempMem : listaProcesos.colaProcesos.get(0).dirAsignadas){
+                        for (DireccionMemoria tempMem : listaProcesos.colaProcesos.get(0).dirAsignadas) {
                             tempMem.setPID(null);
                             tempMem.setNombreProceso(null);
                         }
                         listaProcesos.procesosMatados.add(listaProcesos.colaProcesos.get(0));
-                        System.out.println("El proceso "+listaProcesos.colaProcesos.get(0).getNomProceso()+ " con PID "+
-                                listaProcesos.colaProcesos.get(0).getPID()+" con " + listaProcesos.colaProcesos.get(0).getInstruccionesTotales() +
+                        System.out.println("El proceso " + listaProcesos.colaProcesos.get(0).getNomProceso() + " con PID " +
+                                listaProcesos.colaProcesos.get(0).getPID() + " con " + listaProcesos.colaProcesos.get(0).getInstruccionesTotales() +
                                 " intrucciones pendientes fue detenido a la fuerza");
                         listaProcesos.colaProcesos.remove(0);
                         listaProcesos.contadorProcesos--;
