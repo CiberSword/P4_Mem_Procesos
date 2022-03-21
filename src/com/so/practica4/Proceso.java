@@ -11,7 +11,7 @@ public class Proceso {
     int instruccionesTotales;
     int instruccionesEjecutadas;
     int tamanioProceso;
-    List dirAsignadas;
+    List <DireccionMemoria> dirAsignadas;
 
     public Proceso() {
     }
@@ -25,12 +25,13 @@ public class Proceso {
         //PID aleatorio
         this.setPID(random.nextInt(999999));
         //Num aleatorio instrucciones entre 10-30
-        setInstruccionesTotales(random.nextInt(30 + 10) +10);
+        setInstruccionesTotales(random.nextInt(30) +10);
         //Num aleatorio para espacio proceso
         int tamaniolocalidades[] = {64,128,256,512};
         int selecciontamanio = random.nextInt(3);
         setTamanioProceso(tamaniolocalidades[selecciontamanio]);
         System.out.println("hasta aquí el proceso se creó bien");
+       /* dirAsignadas.add(new DireccionMemoria(1456, this.nomProceso, this.PID));*/
     }
 
     public String getNomProceso() {
@@ -80,4 +81,19 @@ public class Proceso {
     public void setDirAsignadas(List dirAsignadas) {
         this.dirAsignadas = dirAsignadas;
     }
+
+
+    public void Ver_Proceso(){
+        System.out.println("Nombre: "+this.nomProceso + "\n");
+        System.out.println("ID Único: "+this.PID + "\n");
+        System.out.println("Intrucciones Totales: "+this.instruccionesTotales + "\n");
+        System.out.println("Instrucciones ejecutadas: "+this.instruccionesEjecutadas + "\n");
+        System.out.println("Direcciones de memoria asignadas: "/*+this.dirAsignadas*/ + "\n");
+        /*imprimirLista(dirAsignadas);*/
+    }
+        public static void imprimirLista(List<DireccionMemoria> dirAsignadas){
+            for(DireccionMemoria var : dirAsignadas){
+                System.out.println(var);
+            }
+        }
 }

@@ -33,6 +33,7 @@ public class Main {
                     case 1:
                         Proceso nuevoProceso = new Proceso();
                         nuevoProceso.crearProceso();
+                        nuevoProceso.Ver_Proceso();
                         if (memoriaSistema.espacioDisponible(nuevoProceso.getTamanioProceso())){
                             //Asignación del proceso a memoria
                         }
@@ -45,6 +46,7 @@ public class Main {
                     case 3:
                         break;
                     case 4:
+                        /*nuevoProceso.Ver_Proceso();*/
                         break;
                     case 5:
                         break;
