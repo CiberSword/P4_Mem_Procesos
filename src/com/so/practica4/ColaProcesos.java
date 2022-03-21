@@ -4,11 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-
 public class ColaProcesos {
     List<Proceso> colaProcesos = new ArrayList<Proceso>();
-    List<String> procesosFinalizados = new ArrayList<String>();
-    int contadorProcesos=0;
+    List<Proceso> procesosFinalizados = new ArrayList<Proceso>();
+    List<Proceso> procesosMatados = new ArrayList<Proceso>();
+    int contadorProcesos = 0;
 
     public int getContadorProcesos() {
         return contadorProcesos;
@@ -20,35 +20,72 @@ public class ColaProcesos {
 
     public ColaProcesos() {
     }
-    public void imprimirColaProcesos(){
-        int numeracion=1;
+
+    public void imprimirColaProcesos() {
+        int numeracion = 1;
         System.out.println("\nCola de procesos");
         System.out.println("\nNombre              PID         Instrucciones Pendientes");
-        for(Proceso p : colaProcesos){
-            if(numeracion==1)
-                System.out.println(numeracion + ".- " + p.getNomProceso()+"         "+p.getPID()+"                    "+p.getInstruccionesTotales()+"     <------ Proceso activo");
-            if(numeracion!=1)
-                System.out.println(numeracion + ".- " + p.getNomProceso()+"         "+p.getPID()+"                    "+p.getInstruccionesTotales());
+        for (Proceso p : colaProcesos) {
+            if (numeracion == 1)
+                System.out.println(numeracion + ".- " + p.getNomProceso() + "         " + p.getPID() + "                    " + p.getInstruccionesTotales() + "     <------ Proceso activo");
+            if (numeracion != 1)
+                System.out.println(numeracion + ".- " + p.getNomProceso() + "         " + p.getPID() + "                    " + p.getInstruccionesTotales());
             numeracion++;
         }
     }
 
-    public void ejecutarActual (){
-        int tempPendientes = colaProcesos.get(0).getInstruccionesTotales()-5;
-        int tempEjecutadas = colaProcesos.get(0).getInstruccionesEjecutadas()+5;
+    public void imprimirProcesosFinalizados(){
+        int contador = 0;
+        System.out.println("Lista de procesos finalizados:");
+        for (Proceso p : procesosFinalizados){
+            System.out.println(contador + ".- "+p.getNomProceso());
+            contador++;
+        }
+    }
+
+    public void imprimirProcesosMatados(){
+        int contador = 0;
+        System.out.println("Lista de procesos matados:");
+        for (Proceso p : procesosMatados){
+            System.out.println(contador + ".- "+p.getNomProceso());
+            contador++;
+        }
+    }
+
+    public List<Proceso> getProcesosFinalizados() {
+        return procesosFinalizados;
+    }
+
+    public void setProcesosFinalizados(List<Proceso> procesosFinalizados) {
+        this.procesosFinalizados = procesosFinalizados;
+    }
+
+    public List<Proceso> getProcesosMatados() {
+        return procesosMatados;
+    }
+
+    public void setProcesosMatados(List<Proceso> procesosMatados) {
+        this.procesosMatados = procesosMatados;
+    }
+
+    public boolean ejecutarActual() {
+        int tempPendientes = colaProcesos.get(0).getInstruccionesTotales() - 5;
+        int tempEjecutadas = colaProcesos.get(0).getInstruccionesEjecutadas() + 5;
         Proceso tempP;
+        boolean activo = true;
 
         colaProcesos.get(0).setInstruccionesTotales(tempPendientes);
         colaProcesos.get(0).setInstruccionesEjecutadas(tempEjecutadas);
-        if (tempPendientes ==0){
-            //EliminarProcesoMemoria
+        if (tempPendientes <= 0) {
+            activo = false;
         }
         tempP = colaProcesos.get(0);
         colaProcesos.remove(0);
         colaProcesos.add(tempP);
+        return activo;
     }
 
-    public void pasarSiguiente (){
+    public void pasarSiguiente() {
         Proceso tempP;
         tempP = colaProcesos.get(0);
         colaProcesos.remove(0);
@@ -62,6 +99,7 @@ public class ColaProcesos {
     public void setColaProcesos(List<Proceso> colaProcesos) {
         this.colaProcesos = colaProcesos;
     }
+
     public void addProceso(Proceso nuevoProce) {
         contadorProcesos++;
         this.colaProcesos.add(nuevoProce);
