@@ -18,8 +18,15 @@ public class MapaMemoria {
         }
     }
 
+    public void imprimirDetallesMem() {
+        System.out.println("\nLocalidad       Proceso");
+        for (DireccionMemoria mem : numDir){
+            if(mem.PID != null)
+                System.out.println("    "+mem.getNumDireccion() + "            " + mem.getNombreProceso());
+        }
+    }
     public void imprimirInfo() {
-        System.out.println("Memoria total disponible: " + tamanio + " localidades.");
+        System.out.println("Memoria total del sistema: "+tamanio+" localidades");
     }
 
     public boolean espacioDisponible(int locsRequeridas){

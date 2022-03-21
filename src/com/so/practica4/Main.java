@@ -51,14 +51,17 @@ public class Main {
                                     "Ejecute o mate otros procesos e intente de nuevo");
                         break;
                     case 2:
-                        listaProcesos.imprimirColaProcesos();
+                        System.out.println("Procesos en cola: " + listaProcesos.getContadorProcesos());
+                        memoriaSistema.imprimirDetallesMem();
                         break;
                     case 3:
+                        listaProcesos.imprimirColaProcesos();
                         break;
                     case 4:
-
+                        listaProcesos.colaProcesos.get(0).VerProceso();
                         break;
                     case 5:
+
                         break;
                     case 6:
                         break;

@@ -16,6 +16,7 @@ public class Proceso {
     public Proceso() {
     }
     public void crearProceso() {
+
         Scanner scanner = new Scanner(System.in);
         Random random = new Random();
 
@@ -84,12 +85,13 @@ public class Proceso {
 
 
     public void VerProceso(){
-        System.out.println("Nombre: "+this.nomProceso + "\n");
-        System.out.println("ID Único: "+this.PID + "\n");
-        System.out.println("Intrucciones Totales: "+this.instruccionesTotales + "\n");
-        System.out.println("Instrucciones ejecutadas: "+this.instruccionesEjecutadas + "\n");
-        System.out.println("Direcciones de memoria asignadas: "/*+this.dirAsignadas*/ + "\n");
-        /*imprimirLista(dirAsignadas);*/
+        System.out.println("Proceso Actual:");
+        System.out.println("- Nombre: "+this.nomProceso);
+        System.out.println("- ID Único: "+this.PID);
+        System.out.println("- Intrucciones Totales: "+this.instruccionesTotales);
+        System.out.println("- Instrucciones ejecutadas: "+this.instruccionesEjecutadas);
+        System.out.println("- Direcciones de memoria asignadas: "/*+this.dirAsignadas*/);
+        imprimirDirecciones();
     }
     public void imprimirDirecciones(){
         for(DireccionMemoria var : dirAsignadas){
