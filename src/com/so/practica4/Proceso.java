@@ -26,7 +26,7 @@ public class Proceso {
         //PID aleatorio
         this.setPID(random.nextInt(999999));
         //Num aleatorio instrucciones entre 10-30
-        setInstruccionesTotales((int) (Math.random() * 30) + 11);
+        setInstruccionesTotales((int) (Math.random() * 30-10+1) + 10);
         //Num aleatorio para espacio proceso
         int tamaniolocalidades[] = {64,128,256,512};
         int selecciontamanio = random.nextInt(3);

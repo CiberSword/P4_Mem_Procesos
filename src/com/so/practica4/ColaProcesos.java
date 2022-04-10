@@ -3,7 +3,6 @@ package com.so.practica4;
 import java.util.ArrayList;
 import java.util.List;
 
-
 public class ColaProcesos {
     List<Proceso> colaProcesos = new ArrayList<Proceso>();
     List<Proceso> procesosFinalizados = new ArrayList<Proceso>();
