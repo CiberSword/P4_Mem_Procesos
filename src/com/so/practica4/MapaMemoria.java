@@ -5,46 +5,91 @@ import java.util.List;
 
 public class MapaMemoria {
     int tamanio;
-    List<DireccionMemoria> numDir = new ArrayList<DireccionMemoria>();
+    List<DireccionMemoria> mapaMemoria = new ArrayList<DireccionMemoria>();
 
     //Constructor
     public MapaMemoria(int tamanio) {
         this.tamanio = tamanio;
         //Añade Direcciones de Memoria según el tamaño especificado
         for (int i = 1; i <= tamanio; i++) {
-            numDir.add(new DireccionMemoria(i, null, null));
+            mapaMemoria.add(new DireccionMemoria(i, null, null));
         }
     }
 
-    public void imprimirDetallesMem() {
+    public void imprimirHuecosMemoria() {
         System.out.println("\nLocalidad       Proceso");
-        for (DireccionMemoria mem : numDir){
+        for (DireccionMemoria mem : mapaMemoria){
             if(mem.PID != null)
                 System.out.println("    "+mem.getNumDireccion() + "            " + mem.getNombreProceso());
         }
     }
+
+    public void analizarMemoria(){
+        Integer dirActual=0;
+        Integer tamanio=0;
+        Integer PIDactual=0;
+        List<Integer> dirInicialesProceso = new ArrayList<Integer>();
+        List<Integer> tamanioProceso = new ArrayList<Integer>();
+        List<Integer> dirInicialesHuecos = new ArrayList<Integer>();
+        List<Integer> tamanioHueco = new ArrayList<Integer>();
+
+
+        for (DireccionMemoria mem : mapaMemoria){
+            if(tamanio==0){
+                dirActual = mem.getNumDireccion();
+                PIDactual = mem.getPID();
+            }
+            if(mem.PID != null){//Si hay proceso
+                tamanio++;
+                if(PIDactual == null){
+                    tamanioHueco.add(tamanio-1);
+                    tamanio=0;
+                }
+                else if(PIDactual != mem.PID){
+                    tamanioProceso.add(tamanio-1);
+                    tamanio=0;
+                }
+            }
+            if(mem.PID == null){//Si es hueco
+                tamanio++;
+                if(PIDactual != null){
+                    tamanioProceso.add(tamanio-1);
+                    tamanio=0;
+                }
+            }
+        }
+        System.out.println("Tamaño Procesos: "+tamanioProceso);
+        System.out.println("Tamaño Huecos: "+tamanioHueco);
+    }
+
     public void imprimirInfo() {
         System.out.println("Memoria total del sistema: "+tamanio+" localidades");
     }
 
-    public boolean espacioDisponible(int locsRequeridas){
-        boolean hayEspacio;
-        int conteoLibres=0;
-        for (DireccionMemoria temp: numDir){
-            if(temp.PID == null)
-                conteoLibres++;
+    public boolean espacioDisponible(int tamanioPaginas, int numPags){
+        boolean cabenPags;
+        int conteoMarcos=0;
+        int localidadesJuntas=0;
+        for (DireccionMemoria temp: mapaMemoria){
+            if(temp.PID == null){
+                localidadesJuntas++;
+                if(localidadesJuntas>=tamanioPaginas)
+                    conteoMarcos++;
+            }
+            else
+                localidadesJuntas=0;
         }
-        if (conteoLibres>=locsRequeridas)
-            hayEspacio = true;
+        if (conteoMarcos>=numPags)
+            cabenPags = true;
         else
-            hayEspacio = false;
-        return hayEspacio;
+            cabenPags = false;
+        return cabenPags;
     }
 
     public List<DireccionMemoria> direccionesParaProceso (Proceso nuevoProce){
         int localidadesNecesarias = nuevoProce.getTamanioProceso();
         List<DireccionMemoria> localidadesAsignadas = new ArrayList<DireccionMemoria>();
-        for(DireccionMemoria n : numDir){
+        for(DireccionMemoria n : mapaMemoria){
             if(n.getPID()==null && localidadesNecesarias>=1){
                 localidadesAsignadas.add(n);
                 n.setPID(nuevoProce.getPID());

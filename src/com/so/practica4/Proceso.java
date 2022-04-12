@@ -31,8 +31,6 @@ public class Proceso {
         int tamaniolocalidades[] = {64,128,256,512};
         int selecciontamanio = random.nextInt(3);
         setTamanioProceso(tamaniolocalidades[selecciontamanio]);
-
-       /* dirAsignadas.add(new DireccionMemoria(1456, this.nomProceso, this.PID));*/
     }
 
     public void VerProceso(){
