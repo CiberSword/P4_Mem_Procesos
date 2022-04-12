@@ -37,24 +37,31 @@ public class MapaMemoria {
         for (DireccionMemoria mem : mapaMemoria){
             if(tamanio==0){
                 dirActual = mem.getNumDireccion();
-                PIDactual = mem.getPID();
+                PIDactual = mem.PID;
             }
             if(mem.PID != null){//Si hay proceso
                 tamanio++;
                 if(PIDactual == null){
                     tamanioHueco.add(tamanio-1);
-                    tamanio=0;
+                    dirActual = mem.getNumDireccion();
+                    PIDactual = mem.PID;
+                    tamanio=1;
                 }
-                else if(PIDactual != mem.PID){
+                if(!mem.PID.equals(PIDactual)){
+                    System.out.println("Entra y su ID de memoria es: "+mem.PID+" y el ID ACTUAL es: "+PIDactual);
                     tamanioProceso.add(tamanio-1);
-                    tamanio=0;
+                    dirActual = mem.getNumDireccion();
+                    PIDactual = mem.PID;
+                    tamanio=1;
                 }
             }
             if(mem.PID == null){//Si es hueco
                 tamanio++;
                 if(PIDactual != null){
                     tamanioProceso.add(tamanio-1);
-                    tamanio=0;
+                    dirActual = mem.getNumDireccion();
+                    PIDactual = mem.PID;
+                    tamanio=1;
                 }
             }
         }
