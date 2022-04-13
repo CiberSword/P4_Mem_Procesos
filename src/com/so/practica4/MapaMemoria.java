@@ -63,6 +63,10 @@ public class MapaMemoria {
                     PIDactual = mem.PID;
                     tamanio=1;
                 }
+                if(mem.getNumDireccion() == 1023){
+                    tamanioProceso.add(tamanio);
+                    ListaLigadaMemoria.add(new Estado("Proceso", dirActual,tamanio));
+                }
             }
             if(mem.PID == null){//Si es hueco
                 tamanio++;
