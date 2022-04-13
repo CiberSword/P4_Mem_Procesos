@@ -14,7 +14,7 @@ public class Main {
 
         memoriaSistema.imprimirInfo();
         //Elección menu
-        while (opcion != 9) {
+        while (opcion != 10) {
             //Try catch para evitar que el programa termine si hay un error
             try {
                 System.out.println("Elige opción:\n" +
@@ -26,7 +26,8 @@ public class Main {
                         "6. Ejecutar proceso actual\n" +
                         "7. Pasar al proceso siguiente\n" +
                         "8. Matar proceso actual\n" +
-                        "9. Salir del programa");
+                        "9. Desfragmentar memoria\n" +
+                        "10. Salir del programa");
 
                 //Recoger una variable por consola
                 opcion = Integer.parseInt(scanner.nextLine());
@@ -55,7 +56,7 @@ public class Main {
                         colaProcesos.imprimirProcesosMatados();
                         break;
                     case 3:
-                        //memoriaSistema.imprimirDetallesMem();
+                        memoriaSistema.imprimirDetallesMem();
                         memoriaSistema.analizarMemoria();
                         break;
                     case 4:
@@ -95,6 +96,11 @@ public class Main {
                         colaProcesos.contadorProcesos--;
                         break;
                     case 9:
+                        System.out.println("Comenzando desfragmentación...");
+                        memoriaSistema.desfragmentarMemoria(colaProcesos,tamanioPaginas);
+                        System.out.println("Desfragmentación finalizada");
+                        break;
+                    case 10:
                         System.out.println("Procesos antes del cierre:");
                         colaProcesos.imprimirColaProcesos();
                         System.out.println("Adios!");

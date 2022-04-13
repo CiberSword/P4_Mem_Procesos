@@ -8,7 +8,6 @@ public class MapaMemoria {
 
     int tamanio;
     List<DireccionMemoria> mapaMemoria = new ArrayList<DireccionMemoria>();
-
     //Constructor
     public MapaMemoria(int tamanio) {
         this.tamanio = tamanio;
@@ -33,7 +32,6 @@ public class MapaMemoria {
     }
 
     public void analizarMemoria(){
-
         LinkedList<Estado> ListaLigadaMemoria = new LinkedList<Estado>();
         Estado Process = new Estado();
         Integer dirActual=0;
@@ -126,18 +124,18 @@ public class MapaMemoria {
         return cabenPags;
     }
 
-    public List<DireccionMemoria> direccionesParaProceso (Proceso nuevoProce, int tamanioPaginas, int PagsNecesarias){
+    public List<DireccionMemoria> direccionesParaProceso (Proceso proceso, int tamanioPaginas, int PagsNecesarias){
         int localidadesJuntas=0;
         List<DireccionMemoria> localidadesAsignadas = new ArrayList<DireccionMemoria>();
         for (int i= 0; i<=tamanio-1;i++){
             if(mapaMemoria.get(i).getPID()==null) {
                 localidadesJuntas++;
                 if (localidadesJuntas >= tamanioPaginas && PagsNecesarias>=1) {
-                    nuevoProce.getTablaPaginas().getDirInicialPaginas().add(mapaMemoria.get(i-tamanioPaginas+1).getNumDireccion());
+                    proceso.getTablaPaginas().getDirInicialPaginas().add(mapaMemoria.get(i-tamanioPaginas+1).getNumDireccion());
                     for (int j = tamanioPaginas-1; j >= 0; j--) {
                         localidadesAsignadas.add(mapaMemoria.get(i - j));
-                        mapaMemoria.get(i - j).setPID(nuevoProce.getPID());
-                        mapaMemoria.get(i - j).setNombreProceso(nuevoProce.getNomProceso());
+                        mapaMemoria.get(i - j).setPID(proceso.getPID());
+                        mapaMemoria.get(i - j).setNombreProceso(proceso.getNomProceso());
                     }
                     PagsNecesarias--;
                     localidadesJuntas = 0;
@@ -148,4 +146,13 @@ public class MapaMemoria {
         }
         return localidadesAsignadas;
     }
+    public void desfragmentarMemoria(ColaProcesos colaProcesos, int tamanioPaginas){
+            for(Proceso proceso:colaProcesos.getColaProcesos()) {
+                for (DireccionMemoria dirMem : proceso.dirAsignadas) {
+                    dirMem.setPID(null);
+                    dirMem.setNombreProceso(null);
+                }
+                proceso.setDirAsignadas(direccionesParaProceso(proceso,tamanioPaginas,proceso.getNumPags()));
+            }
+        }
 }
