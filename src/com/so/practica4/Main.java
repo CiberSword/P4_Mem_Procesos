@@ -41,7 +41,7 @@ public class Main {
                         //Verifica si hay espacio en memoria revisando nulls
                         if (memoriaSistema.espacioDisponible(tamanioPaginas,numPags)) {
                             //Asignación de localidades de memoria al proceso
-                            nuevoProceso.setDirAsignadas(memoriaSistema.direccionesParaProceso(nuevoProceso));
+                            nuevoProceso.setDirAsignadas(memoriaSistema.direccionesParaProceso(nuevoProceso,tamanioPaginas,numPags));
                             //Se añade proceso a la cola de procesos
                             colaProcesos.addProceso(nuevoProceso);
                             System.out.println("Proceso creado correctamente");

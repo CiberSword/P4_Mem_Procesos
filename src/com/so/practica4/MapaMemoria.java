@@ -98,8 +98,10 @@ public class MapaMemoria {
         for (DireccionMemoria temp: mapaMemoria){
             if(temp.PID == null){
                 localidadesJuntas++;
-                if(localidadesJuntas>=tamanioPaginas)
+                if(localidadesJuntas>=tamanioPaginas){
                     conteoMarcos++;
+                    localidadesJuntas=0;
+                }
             }
             else
                 localidadesJuntas=0;
@@ -108,24 +110,29 @@ public class MapaMemoria {
             cabenPags = true;
         else
             cabenPags = false;
+        System.out.println("Hay "+conteoMarcos+" marcos de tamaño 16 disponibles");
         return cabenPags;
     }
 
-    public List<DireccionMemoria> direccionesParaProceso (Proceso nuevoProce){
-        int localidadesNecesarias = nuevoProce.getTamanioProceso();
+    public List<DireccionMemoria> direccionesParaProceso (Proceso nuevoProce, int tamanioPaginas, int PagsNecesarias){
+        int localidadesJuntas=0;
         List<DireccionMemoria> localidadesAsignadas = new ArrayList<DireccionMemoria>();
-        for(DireccionMemoria n : mapaMemoria){
-            if(n.getPID()==null && localidadesNecesarias>=1){
-                localidadesAsignadas.add(n);
-                n.setPID(nuevoProce.getPID());
-                n.setNombreProceso(nuevoProce.getNomProceso());
-                localidadesNecesarias--;
+        for (int i= 0; i<=tamanio-1;i++){
+            if(mapaMemoria.get(i).getPID()==null) {
+                localidadesJuntas++;
+                if (localidadesJuntas >= tamanioPaginas && PagsNecesarias>=1) {
+                    for (int j = tamanioPaginas - 1; j >= 0; j--) {
+                        localidadesAsignadas.add(mapaMemoria.get(i - j));
+                        mapaMemoria.get(i - j).setPID(nuevoProce.getPID());
+                        mapaMemoria.get(i - j).setNombreProceso(nuevoProce.getNomProceso());
+                    }
+                    PagsNecesarias--;
+                    localidadesJuntas = 0;
+                }
             }
+            else
+                localidadesJuntas=0;
         }
         return localidadesAsignadas;
     }
-
-
-    }
-
-
+}
