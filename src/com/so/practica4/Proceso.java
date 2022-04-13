@@ -11,11 +11,14 @@ public class Proceso {
     int instruccionesTotales;
     int instruccionesEjecutadas=0;
     int tamanioProceso;
+    int numPags;
     List <DireccionMemoria> dirAsignadas;
+    TablaPaginas tablaPaginas;
 
     public Proceso() {
     }
-    public void crearProceso() {
+
+    public void crearProceso(int tamanioPaginas) {
 
         Scanner scanner = new Scanner(System.in);
         Random random = new Random();
@@ -27,10 +30,19 @@ public class Proceso {
         this.setPID(random.nextInt(999999));
         //Num aleatorio instrucciones entre 10-30
         setInstruccionesTotales((int) (Math.random() * 30-10+1) + 10);
-        //Num aleatorio para espacio proceso
         int tamaniolocalidades[] = {64,128,256,512};
-        int selecciontamanio = random.nextInt(3);
-        setTamanioProceso(tamaniolocalidades[selecciontamanio]);
+        int selecciontamanio;
+        /*//Num aleatorio para espacio proceso
+        selecciontamanio = random.nextInt(3);
+        setTamanioProceso(tamaniolocalidades[selecciontamanio]);*/
+        //Seleccionar tamaño proceso
+        System.out.println("Seleccione el tamaño del proceso:\n" +
+                "  1.- 64\n  2.- 128\n  3.- 256\n  4.- 512");
+        selecciontamanio=scanner.nextInt();
+        setTamanioProceso(tamaniolocalidades[selecciontamanio-1]);
+        //Calculo de páginas
+        calcNumPags(tamanioPaginas);
+        tablaPaginas = new TablaPaginas(numPags,tamanioPaginas);
     }
 
     public void VerProceso(){
@@ -41,11 +53,16 @@ public class Proceso {
         System.out.println("- Instrucciones ejecutadas: "+this.instruccionesEjecutadas);
         System.out.println("- Direcciones de memoria asignadas: "/*+this.dirAsignadas*/);
         imprimirDirecciones();
+        tablaPaginas.imprimirTablaPaginas();
     }
     public void imprimirDirecciones(){
         for(DireccionMemoria var : dirAsignadas){
             System.out.print(var.getNumDireccion()+",");
         }
+    }
+
+    public void calcNumPags(int tamanioPaginas) {
+        this.numPags = tamanioProceso/tamanioPaginas;
     }
 
     public String getNomProceso() {
@@ -88,12 +105,28 @@ public class Proceso {
         this.tamanioProceso = tamanioProceso;
     }
 
+    public int getNumPags() {
+        return numPags;
+    }
+
+    public void setNumPags(int numPags) {
+        this.numPags = numPags;
+    }
+
     public List getDirAsignadas() {
         return dirAsignadas;
     }
 
     public void setDirAsignadas(List dirAsignadas) {
         this.dirAsignadas = dirAsignadas;
+    }
+
+    public TablaPaginas getTablaPaginas() {
+        return tablaPaginas;
+    }
+
+    public void setTablaPaginas(TablaPaginas tablaPaginas) {
+        this.tablaPaginas = tablaPaginas;
     }
 
 }

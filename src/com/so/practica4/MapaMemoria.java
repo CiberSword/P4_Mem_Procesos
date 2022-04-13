@@ -13,9 +13,15 @@ public class MapaMemoria {
     public MapaMemoria(int tamanio) {
         this.tamanio = tamanio;
         //Añade Direcciones de Memoria según el tamaño especificado
-        for (int i = 1; i <= tamanio; i++) {
+        for (int i = 0; i <= tamanio-1; i++) {
             mapaMemoria.add(new DireccionMemoria(i, null, null));
         }
+    }
+    //Para testear
+    public void imprimirDetallesMem() {
+        System.out.println("\nLocalidad       Proceso");
+        for (DireccionMemoria mem : mapaMemoria)
+                System.out.println("    "+mem.getNumDireccion() + "            " + mem.getNombreProceso());
     }
 
     public void imprimirHuecosMemoria() {
@@ -30,13 +36,11 @@ public class MapaMemoria {
 
         LinkedList<Estado> ListaLigadaMemoria = new LinkedList<Estado>();
         Estado Process = new Estado();
-
         Integer dirActual=0;
         Integer tamanio=0;
         Integer PIDactual=0;
         List<Integer> tamanioProceso = new ArrayList<Integer>();
         List<Integer> tamanioHueco = new ArrayList<Integer>();
-
 
         for (DireccionMemoria mem : mapaMemoria){
             if(tamanio==0){
@@ -110,7 +114,6 @@ public class MapaMemoria {
             cabenPags = true;
         else
             cabenPags = false;
-        System.out.println("Hay "+conteoMarcos+" marcos de tamaño 16 disponibles");
         return cabenPags;
     }
 
@@ -121,7 +124,8 @@ public class MapaMemoria {
             if(mapaMemoria.get(i).getPID()==null) {
                 localidadesJuntas++;
                 if (localidadesJuntas >= tamanioPaginas && PagsNecesarias>=1) {
-                    for (int j = tamanioPaginas - 1; j >= 0; j--) {
+                    nuevoProce.getTablaPaginas().getDirInicialPaginas().add(mapaMemoria.get(i-tamanioPaginas+1).getNumDireccion());
+                    for (int j = tamanioPaginas-1; j >= 0; j--) {
                         localidadesAsignadas.add(mapaMemoria.get(i - j));
                         mapaMemoria.get(i - j).setPID(nuevoProce.getPID());
                         mapaMemoria.get(i - j).setNombreProceso(nuevoProce.getNomProceso());

@@ -36,12 +36,11 @@ public class Main {
                     case 1:
                         Proceso nuevoProceso = new Proceso();
                         //Pide nombre del proceso y se generan los valores aleatorios de PID e Instruccciones
-                        nuevoProceso.crearProceso();
-                        int numPags = nuevoProceso.getTamanioProceso()/tamanioPaginas;
+                        nuevoProceso.crearProceso(tamanioPaginas);
                         //Verifica si hay espacio en memoria revisando nulls
-                        if (memoriaSistema.espacioDisponible(tamanioPaginas,numPags)) {
+                        if (memoriaSistema.espacioDisponible(tamanioPaginas, nuevoProceso.getNumPags())) {
                             //Asignación de localidades de memoria al proceso
-                            nuevoProceso.setDirAsignadas(memoriaSistema.direccionesParaProceso(nuevoProceso,tamanioPaginas,numPags));
+                            nuevoProceso.setDirAsignadas(memoriaSistema.direccionesParaProceso(nuevoProceso,tamanioPaginas,nuevoProceso.getNumPags()));
                             //Se añade proceso a la cola de procesos
                             colaProcesos.addProceso(nuevoProceso);
                             System.out.println("Proceso creado correctamente");
@@ -56,6 +55,7 @@ public class Main {
                         colaProcesos.imprimirProcesosMatados();
                         break;
                     case 3:
+                        memoriaSistema.imprimirDetallesMem();
                         memoriaSistema.analizarMemoria();
                         break;
                     case 4:
