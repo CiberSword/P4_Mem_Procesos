@@ -14,19 +14,19 @@ public class Main {
 
         memoriaSistema.imprimirInfo();
         //Elección menu
-        while (opcion != 8) {
+        while (opcion != 9) {
             //Try catch para evitar que el programa termine si hay un error
             try {
                 System.out.println("Elige opción:\n" +
                         "1. Crear Proceso nuevo\n" +
-                        "2. Ver estado actual del sistema\n" +
-                        "3. Imprimir cola de procesos\n" +
-                        "4. Ver proceso actual\n" +
-                        "5. Ejecutar proceso actual\n" +
-                        "6. Pasar al proceso siguiente\n" +
-                        "7. Matar proceso actual\n" +
-                        "9. Analizar memoria BETA\n" +
-                        "8. Salir del programa");
+                        "2. Ver estado de los procesos\n" +
+                        "3. Ver estado de la memoria\n" +
+                        "4. Imprimir cola de procesos\n" +
+                        "5. Ver proceso actual\n" +
+                        "6. Ejecutar proceso actual\n" +
+                        "7. Pasar al proceso siguiente\n" +
+                        "8. Matar proceso actual\n" +
+                        "9. Salir del programa");
 
                 //Recoger una variable por consola
                 opcion = Integer.parseInt(scanner.nextLine());
@@ -51,17 +51,20 @@ public class Main {
                         break;
                     case 2:
                         System.out.println("Procesos en cola: " + colaProcesos.getContadorProcesos());
-                        memoriaSistema.imprimirHuecosMemoria();
+                        //memoriaSistema.imprimirHuecosMemoria();
                         colaProcesos.imprimirProcesosFinalizados();
                         colaProcesos.imprimirProcesosMatados();
                         break;
                     case 3:
-                        colaProcesos.imprimirColaProcesos();
+                        memoriaSistema.analizarMemoria();
                         break;
                     case 4:
-                        colaProcesos.colaProcesos.get(0).VerProceso();
+                        colaProcesos.imprimirColaProcesos();
                         break;
                     case 5:
+                        colaProcesos.colaProcesos.get(0).VerProceso();
+                        break;
+                    case 6:
                         boolean activo;
                         activo = colaProcesos.ejecutarActual();
                         if (activo == false) {
@@ -76,10 +79,10 @@ public class Main {
                             colaProcesos.contadorProcesos--;
                         }
                         break;
-                    case 6:
+                    case 7:
                         colaProcesos.pasarSiguiente();
                         break;
-                    case 7:
+                    case 8:
                         for (DireccionMemoria tempMem : colaProcesos.colaProcesos.get(0).dirAsignadas) {
                             tempMem.setPID(null);
                             tempMem.setNombreProceso(null);
@@ -91,13 +94,10 @@ public class Main {
                         colaProcesos.colaProcesos.remove(0);
                         colaProcesos.contadorProcesos--;
                         break;
-                    case 8:
+                    case 9:
                         System.out.println("Procesos antes del cierre:");
                         colaProcesos.imprimirColaProcesos();
                         System.out.println("Adios!");
-                        break;
-                    case 9:
-                        memoriaSistema.analizarMemoria();
                         break;
                     default:
                         System.out.println("Número inválido, selecciona de nuevo");
