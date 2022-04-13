@@ -1,9 +1,11 @@
 package com.so.practica4;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 public class MapaMemoria {
+
     int tamanio;
     List<DireccionMemoria> mapaMemoria = new ArrayList<DireccionMemoria>();
 
@@ -25,12 +27,14 @@ public class MapaMemoria {
     }
 
     public void analizarMemoria(){
+
+        LinkedList<Estado> ListaLigadaMemoria = new LinkedList<Estado>();
+        Estado Process = new Estado();
+
         Integer dirActual=0;
         Integer tamanio=0;
         Integer PIDactual=0;
-        List<Integer> dirInicialesProceso = new ArrayList<Integer>();
         List<Integer> tamanioProceso = new ArrayList<Integer>();
-        List<Integer> dirInicialesHuecos = new ArrayList<Integer>();
         List<Integer> tamanioHueco = new ArrayList<Integer>();
 
 
@@ -43,13 +47,14 @@ public class MapaMemoria {
                 tamanio++;
                 if(PIDactual == null){
                     tamanioHueco.add(tamanio-1);
+                    ListaLigadaMemoria.add(new Estado("Hueco",dirActual,tamanio-1));
                     dirActual = mem.getNumDireccion();
                     PIDactual = mem.PID;
                     tamanio=1;
                 }
                 if(!mem.PID.equals(PIDactual)){
-                    System.out.println("Entra y su ID de memoria es: "+mem.PID+" y el ID ACTUAL es: "+PIDactual);
                     tamanioProceso.add(tamanio-1);
+                    ListaLigadaMemoria.add(new Estado("Proceso", dirActual,tamanio-1));
                     dirActual = mem.getNumDireccion();
                     PIDactual = mem.PID;
                     tamanio=1;
@@ -59,6 +64,7 @@ public class MapaMemoria {
                 tamanio++;
                 if(PIDactual != null){
                     tamanioProceso.add(tamanio-1);
+                    ListaLigadaMemoria.add(new Estado("Proceso", dirActual,tamanio-1));
                     dirActual = mem.getNumDireccion();
                     PIDactual = mem.PID;
                     tamanio=1;
@@ -67,6 +73,18 @@ public class MapaMemoria {
         }
         System.out.println("Tamaño Procesos: "+tamanioProceso);
         System.out.println("Tamaño Huecos: "+tamanioHueco);
+        imprimirLista(ListaLigadaMemoria);
+    }
+
+    public void imprimirLista(LinkedList<Estado> ListaLM){
+        System.out.println("\nLista ligada de localidades de memoria (H/P - Dirección - Tamaño)\n");
+        for(Estado list : ListaLM){
+            if(list.equals(ListaLM.getLast())) {
+                System.out.print("["+list.getNombre() + " - " +list.getLocalidadMemoria() + " - " + list.getTamanioEstado() +"] ");
+            }
+            else System.out.print("["+list.getNombre() + " - " +list.getLocalidadMemoria() + " - " + list.getTamanioEstado() +"]-> ");
+        }
+        System.out.println("\n");
     }
 
     public void imprimirInfo() {

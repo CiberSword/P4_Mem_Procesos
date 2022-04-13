@@ -98,6 +98,7 @@ public class Main {
                         break;
                     case 9:
                         memoriaSistema.analizarMemoria();
+                        break;
                     default:
                         System.out.println("Número inválido, selecciona de nuevo");
                         break;
