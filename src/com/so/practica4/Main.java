@@ -55,7 +55,7 @@ public class Main {
                         colaProcesos.imprimirProcesosMatados();
                         break;
                     case 3:
-                        memoriaSistema.imprimirDetallesMem();
+                        //memoriaSistema.imprimirDetallesMem();
                         memoriaSistema.analizarMemoria();
                         break;
                     case 4:

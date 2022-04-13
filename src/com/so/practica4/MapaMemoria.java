@@ -73,6 +73,10 @@ public class MapaMemoria {
                     PIDactual = mem.PID;
                     tamanio=1;
                 }
+                if(mem.getNumDireccion() == 1023){
+                    tamanioHueco.add(tamanio);
+                    ListaLigadaMemoria.add(new Estado("Hueco",dirActual,tamanio));
+                }
             }
         }
         System.out.println("Tamaño Procesos: "+tamanioProceso);
@@ -91,7 +95,8 @@ public class MapaMemoria {
         System.out.println("\n");
     }
 
-    public void imprimirInfo() {
+
+        public void imprimirInfo() {
         System.out.println("Memoria total del sistema: "+tamanio+" localidades");
     }
 

@@ -32,14 +32,17 @@ public class Proceso {
         setInstruccionesTotales((int) (Math.random() * 30-10+1) + 10);
         int tamaniolocalidades[] = {64,128,256,512};
         int selecciontamanio;
-        /*//Num aleatorio para espacio proceso
+
+        //Num aleatorio para espacio proceso
         selecciontamanio = random.nextInt(3);
-        setTamanioProceso(tamaniolocalidades[selecciontamanio]);*/
+        setTamanioProceso(tamaniolocalidades[selecciontamanio]);
+
         //Seleccionar tamaño proceso
-        System.out.println("Seleccione el tamaño del proceso:\n" +
+        /*System.out.println("Seleccione el tamaño del proceso:\n" +
                 "  1.- 64\n  2.- 128\n  3.- 256\n  4.- 512");
         selecciontamanio=scanner.nextInt();
-        setTamanioProceso(tamaniolocalidades[selecciontamanio-1]);
+        setTamanioProceso(tamaniolocalidades[selecciontamanio-1]);*/
+
         //Calculo de páginas
         calcNumPags(tamanioPaginas);
         tablaPaginas = new TablaPaginas(numPags,tamanioPaginas);
