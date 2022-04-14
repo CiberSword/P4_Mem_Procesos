@@ -1,4 +1,4 @@
-package com.so.practica4;
+package com.so.practica5;
 
 public class Estado {
     int LocalidadMemoria;
