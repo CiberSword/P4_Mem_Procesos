@@ -8,6 +8,7 @@ public class MapaMemoria {
 
     int tamanio;
     List<DireccionMemoria> mapaMemoria = new ArrayList<DireccionMemoria>();
+    LinkedList<Estado> ListaLigadaMemoria;
     //Constructor
     public MapaMemoria(int tamanio) {
         this.tamanio = tamanio;
@@ -32,7 +33,7 @@ public class MapaMemoria {
     }
 
     public void analizarMemoria(){
-        LinkedList<Estado> ListaLigadaMemoria = new LinkedList<Estado>();
+        ListaLigadaMemoria = new LinkedList<Estado>();
         Estado Process = new Estado();
         Integer dirActual=0;
         Integer tamanio=0;
@@ -147,6 +148,12 @@ public class MapaMemoria {
         return localidadesAsignadas;
     }
     public void desfragmentarMemoria(ColaProcesos colaProcesos, int tamanioPaginas){
+            int despRestantes = colaProcesos.getColaProcesos().size()-colaProcesos.getDesplazamientos();
+            int despHechos = colaProcesos.getDesplazamientos();
+            for(int i=0;i<=despRestantes-1;i++){
+                colaProcesos.pasarSiguiente();
+            }
+            colaProcesos.imprimirColaProcesos();
             for(Proceso proceso:colaProcesos.getColaProcesos()) {
                 for (DireccionMemoria dirMem : proceso.dirAsignadas) {
                     dirMem.setPID(null);
@@ -154,5 +161,10 @@ public class MapaMemoria {
                 }
                 proceso.setDirAsignadas(direccionesParaProceso(proceso,tamanioPaginas,proceso.getNumPags()));
             }
+            System.out.println("Desplazamientos hechos: "+despHechos);
+            for(int i=0;i<=despHechos-1;i++){
+            colaProcesos.pasarSiguiente();
+            }
+            colaProcesos.setDesplazamientos(despHechos);
         }
 }

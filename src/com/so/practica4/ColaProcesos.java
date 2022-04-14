@@ -8,6 +8,7 @@ public class ColaProcesos {
     List<Proceso> procesosFinalizados = new ArrayList<Proceso>();
     List<Proceso> procesosMatados = new ArrayList<Proceso>();
     int contadorProcesos = 0;
+    int desplazamientos = 0;
 
     public int getContadorProcesos() {
         return contadorProcesos;
@@ -67,10 +68,17 @@ public class ColaProcesos {
         this.procesosMatados = procesosMatados;
     }
 
+    public int getDesplazamientos() {
+        return desplazamientos;
+    }
+
+    public void setDesplazamientos(int desplazamientos) {
+        this.desplazamientos = desplazamientos;
+    }
+
     public boolean ejecutarActual() {
         int tempPendientes = colaProcesos.get(0).getInstruccionesTotales() - 5;
         int tempEjecutadas = colaProcesos.get(0).getInstruccionesEjecutadas() + 5;
-        Proceso tempP;
         boolean activo = true;
 
         colaProcesos.get(0).setInstruccionesTotales(tempPendientes);
@@ -78,9 +86,7 @@ public class ColaProcesos {
         if (tempPendientes <= 0) {
             activo = false;
         }
-        tempP = colaProcesos.get(0);
-        colaProcesos.remove(0);
-        colaProcesos.add(tempP);
+        pasarSiguiente();
         return activo;
     }
 
@@ -89,6 +95,9 @@ public class ColaProcesos {
         tempP = colaProcesos.get(0);
         colaProcesos.remove(0);
         colaProcesos.add(tempP);
+        desplazamientos++;
+        if (desplazamientos>= colaProcesos.size())
+            desplazamientos=0;
     }
 
     public List<Proceso> getColaProcesos() {
