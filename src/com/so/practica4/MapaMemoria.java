@@ -38,8 +38,6 @@ public class MapaMemoria {
         Integer dirActual=0;
         Integer tamanio=0;
         Integer PIDactual=0;
-        List<Integer> tamanioProceso = new ArrayList<Integer>();
-        List<Integer> tamanioHueco = new ArrayList<Integer>();
 
         for (DireccionMemoria mem : mapaMemoria){
             if(tamanio==0){
@@ -49,41 +47,34 @@ public class MapaMemoria {
             if(mem.PID != null){//Si hay proceso
                 tamanio++;
                 if(PIDactual == null){
-                    tamanioHueco.add(tamanio-1);
                     ListaLigadaMemoria.add(new Estado("Hueco",dirActual,tamanio-1));
                     dirActual = mem.getNumDireccion();
                     PIDactual = mem.PID;
                     tamanio=1;
                 }
                 if(!mem.PID.equals(PIDactual)){
-                    tamanioProceso.add(tamanio-1);
                     ListaLigadaMemoria.add(new Estado("Proceso", dirActual,tamanio-1));
                     dirActual = mem.getNumDireccion();
                     PIDactual = mem.PID;
                     tamanio=1;
                 }
                 if(mem.getNumDireccion() == 1023){
-                    tamanioProceso.add(tamanio);
                     ListaLigadaMemoria.add(new Estado("Proceso", dirActual,tamanio));
                 }
             }
             if(mem.PID == null){//Si es hueco
                 tamanio++;
                 if(PIDactual != null){
-                    tamanioProceso.add(tamanio-1);
                     ListaLigadaMemoria.add(new Estado("Proceso", dirActual,tamanio-1));
                     dirActual = mem.getNumDireccion();
                     PIDactual = mem.PID;
                     tamanio=1;
                 }
                 if(mem.getNumDireccion() == 1023){
-                    tamanioHueco.add(tamanio);
                     ListaLigadaMemoria.add(new Estado("Hueco",dirActual,tamanio));
                 }
             }
         }
-        System.out.println("Tamaño Procesos: "+tamanioProceso);
-        System.out.println("Tamaño Huecos: "+tamanioHueco);
         imprimirLista(ListaLigadaMemoria);
     }
 
@@ -102,7 +93,7 @@ public class MapaMemoria {
         public void imprimirInfo() {
         System.out.println("Memoria total del sistema: "+tamanio+" localidades");
     }
-
+    
     public boolean espacioDisponible(int tamanioPaginas, int numPags){
         boolean cabenPags;
         int conteoMarcos=0;
@@ -149,23 +140,23 @@ public class MapaMemoria {
         return localidadesAsignadas;
     }
     public void desfragmentarMemoria(ColaProcesos colaProcesos, int tamanioPaginas){
-            int despRestantes = colaProcesos.getColaProcesos().size()-colaProcesos.getDesplazamientos();
-            int despHechos = colaProcesos.getDesplazamientos();
-            for(int i=0;i<=despRestantes-1;i++){
-                colaProcesos.pasarSiguiente();
-            }
-            colaProcesos.imprimirColaProcesos();
-            for(Proceso proceso:colaProcesos.getColaProcesos()) {
-                for (DireccionMemoria dirMem : proceso.dirAsignadas) {
-                    dirMem.setPID(null);
-                    dirMem.setNombreProceso(null);
-                }
-                proceso.setDirAsignadas(direccionesParaProceso(proceso,tamanioPaginas,proceso.getNumPags()));
-            }
-            System.out.println("Desplazamientos hechos: "+despHechos);
-            for(int i=0;i<=despHechos-1;i++){
+        int despRestantes = colaProcesos.getColaProcesos().size()-colaProcesos.getDesplazamientos();
+        int despHechos = colaProcesos.getDesplazamientos();
+        for(int i=0;i<=despRestantes-1;i++){
             colaProcesos.pasarSiguiente();
-            }
-            colaProcesos.setDesplazamientos(despHechos);
         }
+        colaProcesos.imprimirColaProcesos();
+        for(Proceso proceso:colaProcesos.getColaProcesos()) {
+            for (DireccionMemoria dirMem : proceso.dirAsignadas) {
+                dirMem.setPID(null);
+                dirMem.setNombreProceso(null);
+            }
+            proceso.setDirAsignadas(direccionesParaProceso(proceso,tamanioPaginas,proceso.getNumPags()));
+        }
+        System.out.println("Desplazamientos hechos: "+despHechos);
+        for(int i=0;i<=despHechos-1;i++){
+            colaProcesos.pasarSiguiente();
+        }
+        colaProcesos.setDesplazamientos(despHechos);
+    }
 }
