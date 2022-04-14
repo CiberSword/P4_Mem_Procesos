@@ -99,6 +99,7 @@ public class Main {
                         System.out.println("Comenzando desfragmentación...");
                         memoriaSistema.desfragmentarMemoria(colaProcesos,tamanioPaginas);
                         System.out.println("Desfragmentación finalizada");
+                        memoriaSistema.analizarMemoria();
                         break;
                     case 10:
                         System.out.println("Procesos antes del cierre:");

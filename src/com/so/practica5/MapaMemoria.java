@@ -145,7 +145,6 @@ public class MapaMemoria {
         for(int i=0;i<=despRestantes-1;i++){
             colaProcesos.pasarSiguiente();
         }
-        colaProcesos.imprimirColaProcesos();
         for(Proceso proceso:colaProcesos.getColaProcesos()) {
             for (DireccionMemoria dirMem : proceso.dirAsignadas) {
                 dirMem.setPID(null);
