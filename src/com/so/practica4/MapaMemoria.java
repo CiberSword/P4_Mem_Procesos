@@ -128,6 +128,7 @@ public class MapaMemoria {
     public List<DireccionMemoria> direccionesParaProceso (Proceso proceso, int tamanioPaginas, int PagsNecesarias){
         int localidadesJuntas=0;
         List<DireccionMemoria> localidadesAsignadas = new ArrayList<DireccionMemoria>();
+        proceso.getTablaPaginas().getDirInicialPaginas().clear();
         for (int i= 0; i<=tamanio-1;i++){
             if(mapaMemoria.get(i).getPID()==null) {
                 localidadesJuntas++;
